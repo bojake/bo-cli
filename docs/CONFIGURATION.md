@@ -45,6 +45,17 @@ Recommended repo-local path:
 Future versions may support layered defaults, but the public repo-local file should be enough
 for the initial CLI.
 
+## Current CLI Behavior
+
+In the first public implementation, `bo index` uses `.bo/config.json` for:
+
+- path-based boundary records, emitted as `BoundaryInteraction` records with operation `own`
+- generated-code detection when a boundary has `"generated": true`
+- extra exclude patterns from `indexing.exclude_path_patterns`
+
+Package import classification still comes from `package_classification_rules.json`. The
+repo-local BO config adds the team's architectural map on top of those built-in package rules.
+
 ## Example
 
 ```json
@@ -211,4 +222,3 @@ BO uses boundary names when it derives:
 
 Bad boundaries produce noisy recommendations. Good boundaries make the graph feel like the
 codebase as your team understands it.
-

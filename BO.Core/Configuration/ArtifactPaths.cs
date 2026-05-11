@@ -4,6 +4,7 @@ namespace BO.Core.Configuration;
 
 public sealed record ArtifactPaths(
     string WorkspaceRoot,
+    string RepoConfigurationPath,
     string PackageClassificationRulesPath,
     string ScoringConfigPath,
     string RefactorDecisionRulesPath,
@@ -20,6 +21,7 @@ public static class ArtifactPathResolver
 
         return new ArtifactPaths(
             fullRoot,
+            Path.Combine(fullRoot, ".bo", "config.json"),
             Path.Combine(fullRoot, "package_classification_rules.json"),
             Path.Combine(fullRoot, "scoring_config.json"),
             Path.Combine(fullRoot, "refactor_decision_rules.json"),

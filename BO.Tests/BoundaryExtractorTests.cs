@@ -26,4 +26,38 @@ public sealed class BoundaryExtractorTests
             interaction.TargetName == "client.query" &&
             interaction.OperationType == "read");
     }
+
+    [Fact]
+    public void Extract_EmitsConfiguredPathBoundaryInteractions()
+    {
+        var file = new FileRecord(
+            "file:repo:src/domain/order.ts",
+            "repo:test",
+            "/tmp/repo/src/domain/order.ts",
+            "src/domain/order.ts",
+            "typescript",
+            IsTest: false,
+            IsGenerated: false,
+            "module:domain");
+        var config = BoConfiguration.Empty with
+        {
+            Boundaries =
+            [
+                new BoBoundaryConfiguration(
+                    "domain",
+                    "Domain model and business behavior.",
+                    ["src/domain/**"])
+            ]
+        };
+        var rules = new PackageClassificationRules("0.1.0", []);
+        var extractor = new BoundaryExtractor();
+
+        var interactions = extractor.Extract([file], rules, config);
+
+        Assert.Contains(interactions, interaction =>
+            interaction.BoundaryType == "domain" &&
+            interaction.OperationType == "own" &&
+            interaction.TargetName == "src/domain/order.ts" &&
+            interaction.EffectMode == "internal");
+    }
 }

@@ -60,16 +60,17 @@ public sealed class IndexWorkspaceService
     {
         var paths = ArtifactPathResolver.Resolve(workspaceRoot);
         var rules = _artifactLoader.LoadPackageClassificationRules(paths.PackageClassificationRulesPath);
+        var boConfiguration = _artifactLoader.LoadBoConfiguration(paths.RepoConfigurationPath);
         var scoringRules = _artifactLoader.LoadRefactorScoringRules(paths.ScoringConfigPath);
         var decisionRules = _artifactLoader.LoadRefactorDecisionRules(paths.RefactorDecisionRulesPath);
         var scanRules = _artifactLoader.LoadWorkspaceScanRules(paths.WorkspaceScanRulesPath);
         var semanticRules = _artifactLoader.LoadSemanticProfileRules(paths.SemanticProfileRulesPath);
-        var scanResult = _workspaceScanner.Scan(paths.WorkspaceRoot, rules.Version, scanRules);
+        var scanResult = _workspaceScanner.Scan(paths.WorkspaceRoot, rules.Version, scanRules, boConfiguration);
         var symbolExtraction = _sourceSymbolExtractor.Extract(scanResult.Files);
         var contracts = _contractExtractor.Extract(scanResult.Files, symbolExtraction.Symbols);
         var dependencies = _dependencyExtractor.Extract(scanResult.Files);
         var symbolDependencies = _symbolDependencyExtractor.Extract(scanResult.Files, symbolExtraction.Symbols, contracts, dependencies);
-        var boundaryInteractions = _boundaryExtractor.Extract(scanResult.Files, rules);
+        var boundaryInteractions = _boundaryExtractor.Extract(scanResult.Files, rules, boConfiguration);
         var effectProfiles = _effectProfileDeriver.Derive(scanResult.Files, boundaryInteractions, semanticRules);
         var complexityProfiles = _complexityProfileDeriver.Derive(scanResult.Files, symbolExtraction.Symbols, dependencies, effectProfiles);
         var responsibilityProfiles = _responsibilityProfileDeriver.Derive(
@@ -143,13 +144,14 @@ public sealed class IndexWorkspaceService
         var effectiveIntent = refactorIntent ?? RefactorIntent.Default;
         var paths = ArtifactPathResolver.Resolve(workspaceRoot);
         var rules = _artifactLoader.LoadPackageClassificationRules(paths.PackageClassificationRulesPath);
+        var boConfiguration = _artifactLoader.LoadBoConfiguration(paths.RepoConfigurationPath);
         var scoringRules = _artifactLoader.LoadRefactorScoringRules(paths.ScoringConfigPath);
         var decisionRules = _artifactLoader.LoadRefactorDecisionRules(paths.RefactorDecisionRulesPath);
         var scanRules = _artifactLoader.LoadWorkspaceScanRules(paths.WorkspaceScanRulesPath);
         var semanticRules = _artifactLoader.LoadSemanticProfileRules(paths.SemanticProfileRulesPath);
 
         // Phase 1: cheap FS walk — enumerate all files
-        var scanResult = _workspaceScanner.Scan(paths.WorkspaceRoot, rules.Version, scanRules);
+        var scanResult = _workspaceScanner.Scan(paths.WorkspaceRoot, rules.Version, scanRules, boConfiguration);
 
         // Phase 2: identify target files
         var targetFiles = scanResult.Files.Where(targetPredicate).ToList();
@@ -169,7 +171,7 @@ public sealed class IndexWorkspaceService
         var contracts = _contractExtractor.Extract(targetFiles, symbolExtraction.Symbols);
         var dependencies = _dependencyExtractor.Extract(targetFiles);
         var symbolDependencies = _symbolDependencyExtractor.Extract(targetFiles, symbolExtraction.Symbols, contracts, dependencies);
-        var boundaryInteractions = _boundaryExtractor.Extract(targetFiles, rules);
+        var boundaryInteractions = _boundaryExtractor.Extract(targetFiles, rules, boConfiguration);
         var effectProfiles = _effectProfileDeriver.Derive(targetFiles, boundaryInteractions, semanticRules);
         var complexityProfiles = _complexityProfileDeriver.Derive(targetFiles, symbolExtraction.Symbols, dependencies, effectProfiles);
         var responsibilityProfiles = _responsibilityProfileDeriver.Derive(

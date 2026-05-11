@@ -1,4 +1,5 @@
 using BO.Core.Ids;
+using BO.Core.Configuration;
 
 namespace BO.Core.Indexing;
 
@@ -16,9 +17,11 @@ public sealed class WorkspaceScanner
     public IndexResult Scan(
         string workspaceRoot,
         string packageRulesVersion,
-        WorkspaceScanRules? scanRules = null)
+        WorkspaceScanRules? scanRules = null,
+        BoConfiguration? boConfiguration = null)
     {
         var effectiveRules = scanRules ?? _defaultRules;
+        var effectiveConfig = boConfiguration ?? BoConfiguration.Empty;
         var repoId = _idGenerator.CreateRepoId(workspaceRoot);
         var repoName = Path.GetFileName(Path.GetFullPath(workspaceRoot).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
         var files = new List<FileRecord>();
@@ -38,10 +41,15 @@ public sealed class WorkspaceScanner
 
             var relativePath = Path.GetRelativePath(workspaceRoot, filePath);
             var normalizedPath = BoIdGenerator.NormalizePath(relativePath);
+            if (IsExcludedPath(normalizedPath, effectiveConfig))
+            {
+                continue;
+            }
+
             var moduleName = ResolveModuleName(normalizedPath, langInfo, effectiveRules);
             var moduleId = _idGenerator.CreateModuleId(repoId, moduleName);
             var isTest = IsTestPath(normalizedPath, langInfo, effectiveRules);
-            var isGenerated = IsGeneratedPath(normalizedPath, langInfo, effectiveRules);
+            var isGenerated = IsGeneratedPath(normalizedPath, langInfo, effectiveRules, effectiveConfig);
 
             files.Add(new FileRecord(
                 _idGenerator.CreateFileId(repoId, workspaceRoot, filePath),
@@ -138,11 +146,18 @@ public sealed class WorkspaceScanner
     private static bool IsGeneratedPath(
         string normalizedPath,
         LanguageInfo langInfo,
-        WorkspaceScanRules rules)
+        WorkspaceScanRules rules,
+        BoConfiguration boConfiguration)
     {
         return ResolvePathRules(langInfo, rules.GeneratedPathRules)
-            .Any(rule => MatchesPathRule(normalizedPath, rule));
+            .Any(rule => MatchesPathRule(normalizedPath, rule)) ||
+            boConfiguration.Boundaries
+                .Where(boundary => boundary.Generated)
+                .Any(boundary => PathPatternMatcher.MatchesAny(normalizedPath, boundary.PathPatterns));
     }
+
+    private static bool IsExcludedPath(string normalizedPath, BoConfiguration boConfiguration) =>
+        PathPatternMatcher.MatchesAny(normalizedPath, boConfiguration.Indexing.ExcludePathPatterns);
 
     private static WorkspaceModuleRule ResolveModuleRule(LanguageInfo langInfo, WorkspaceScanRules rules)
     {

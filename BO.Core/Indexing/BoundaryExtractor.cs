@@ -16,13 +16,23 @@ public sealed class BoundaryExtractor
 
     public IReadOnlyList<BoundaryInteractionRecord> Extract(
         IReadOnlyList<FileRecord> files,
-        PackageClassificationRules rules)
+        PackageClassificationRules rules,
+        BoConfiguration? boConfiguration = null)
     {
+        var effectiveConfig = boConfiguration ?? BoConfiguration.Empty;
         var interactions = new List<BoundaryInteractionRecord>();
         var seen = new HashSet<string>(StringComparer.Ordinal);
 
         foreach (var file in files)
         {
+            foreach (var interaction in ExtractConfiguredPathBoundaryInteractions(file, effectiveConfig))
+            {
+                if (seen.Add(interaction.Id))
+                {
+                    interactions.Add(interaction);
+                }
+            }
+
             if (file.IsGenerated)
             {
                 continue;
@@ -152,6 +162,29 @@ public sealed class BoundaryExtractor
         }
 
         return interactions;
+    }
+
+    private static IEnumerable<BoundaryInteractionRecord> ExtractConfiguredPathBoundaryInteractions(
+        FileRecord file,
+        BoConfiguration config)
+    {
+        foreach (var boundary in config.Boundaries)
+        {
+            if (string.IsNullOrWhiteSpace(boundary.Name) ||
+                !PathPatternMatcher.MatchesAny(file.NormalizedPath, boundary.PathPatterns))
+            {
+                continue;
+            }
+
+            yield return new BoundaryInteractionRecord(
+                CreateInteractionId(file.Id, boundary.Name, "own", file.NormalizedPath),
+                file.Id,
+                boundary.Name,
+                "own",
+                file.NormalizedPath,
+                boundary.Generated ? "generated" : "internal",
+                1.0);
+        }
     }
 
     private static IReadOnlyDictionary<string, string> ExtractPackageBindings(Node rootNode)

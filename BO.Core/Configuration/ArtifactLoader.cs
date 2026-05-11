@@ -28,6 +28,23 @@ public sealed class ArtifactLoader
         return rules;
     }
 
+    public BoConfiguration LoadBoConfiguration(string path)
+    {
+        if (!File.Exists(path))
+        {
+            return BoConfiguration.Empty;
+        }
+
+        var json = File.ReadAllText(path);
+        var config = JsonSerializer.Deserialize<BoConfiguration>(json, JsonOptions);
+        if (config is null)
+        {
+            throw new InvalidOperationException("Failed to deserialize BO configuration.");
+        }
+
+        return config;
+    }
+
     public RefactorScoringRules LoadRefactorScoringRules(string path)
     {
         if (!File.Exists(path))
