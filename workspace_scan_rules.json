@@ -1,0 +1,82 @@
+{
+  "version": "0.1.0",
+  "notes": [
+    "Workspace scanner conventions used before AST parsing.",
+    "Use languageFamily to target LanguageInfo.Family values such as dotnet or web.",
+    "Use the default family as the fallback rule for any language family without an explicit rule."
+  ],
+  "excludedDirectories": [
+    ".git",
+    "coverage",
+    "node_modules",
+    "dist",
+    "build",
+    "bin",
+    "obj",
+    ".vs",
+    "target",
+    ".gradle",
+    "cmake-build-debug",
+    "cmake-build-release"
+  ],
+  "moduleRules": {
+    "dotnet": {
+      "mode": "first_path_segment",
+      "rootModuleName": "root"
+    },
+    "default": {
+      "mode": "directory",
+      "rootModuleName": "root"
+    }
+  },
+  "testPathRules": [
+    {
+      "languageFamily": "dotnet",
+      "contains": [
+        "/Tests/",
+        ".Tests/",
+        ".Test/"
+      ],
+      "endsWith": [
+        "Tests.cs",
+        "Test.cs"
+      ]
+    },
+    {
+      "languageFamily": "default",
+      "contains": [
+        "/__tests__/"
+      ],
+      "endsWith": [
+        ".test.ts",
+        ".spec.ts",
+        ".test.js",
+        ".spec.js"
+      ]
+    }
+  ],
+  "generatedPathRules": [
+    {
+      "languageFamily": "dotnet",
+      "contains": [
+        "/obj/"
+      ],
+      "endsWith": [
+        ".g.cs",
+        ".designer.cs",
+        ".generated.cs"
+      ]
+    },
+    {
+      "languageFamily": "default",
+      "contains": [
+        "/generated/"
+      ],
+      "endsWith": [
+        ".generated.ts",
+        ".generated.js",
+        ".d.ts"
+      ]
+    }
+  ]
+}

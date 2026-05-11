@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BO.Cli/BO.Cli.csproj" />
+  <Project Path="BO.Core/BO.Core.csproj" />
+  <Project Path="BO.Tests/BO.Tests.csproj" />
+</Solution>

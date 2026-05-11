@@ -1,0 +1,419 @@
+{
+  "version": "0.1.0",
+  "scope": {
+    "languages": [
+      "typescript",
+      "javascript",
+      "csharp"
+    ],
+    "release": "v0.2"
+  },
+  "classification_policy": {
+    "default_confidence": 0.8,
+    "min_user_facing_confidence": 0.6,
+    "notes": [
+      "Rules in this file are deterministic package and API classifiers for BO boundary interaction derivation.",
+      "Package and symbol matches are strong signals but may be overridden by local adapters in later versions."
+    ]
+  },
+  "boundaries": [
+    {
+      "boundary_type": "db",
+      "packages": [
+        "@prisma/client",
+        "prisma",
+        "typeorm",
+        "sequelize",
+        "knex",
+        "pg",
+        "mysql",
+        "mysql2",
+        "mongodb",
+        "mongoose",
+        "redis-om",
+        "Microsoft.Data.SqlClient",
+        "System.Data.SqlClient",
+        "Microsoft.EntityFrameworkCore",
+        "Npgsql",
+        "MySqlConnector",
+        "MongoDB.Driver",
+        "Dapper",
+        "System.Data"
+      ],
+      "symbol_patterns": [
+        "prisma.*",
+        "*.query",
+        "*.execute",
+        "*.findMany",
+        "*.findOne",
+        "*.save",
+        "*.insert",
+        "*.update",
+        "*.delete"
+      ],
+      "operation_overrides": {
+        "*.find*": "read",
+        "*.get*": "read",
+        "*.query": "read",
+        "*.insert*": "write",
+        "*.create*": "write",
+        "*.update*": "write",
+        "*.save*": "write",
+        "*.delete*": "delete"
+      }
+    },
+    {
+      "boundary_type": "http",
+      "packages": [
+        "axios",
+        "node-fetch",
+        "undici",
+        "got",
+        "superagent",
+        "express",
+        "fastify",
+        "koa",
+        "hono",
+        "@hapi/hapi",
+        "System.Net.Http",
+        "System.Net.Http.Headers",
+        "Microsoft.AspNetCore",
+        "RestSharp",
+        "Flurl.Http"
+      ],
+      "symbol_patterns": [
+        "fetch",
+        "axios.*",
+        "request.*",
+        "reply.*",
+        "response.*",
+        "res.*"
+      ],
+      "operation_overrides": {
+        "*.get*": "read",
+        "*.fetch*": "read",
+        "*.post*": "write",
+        "*.put*": "write",
+        "*.patch*": "write",
+        "*.delete*": "delete",
+        "*.send*": "write",
+        "*.json": "serialize"
+      }
+    },
+    {
+      "boundary_type": "filesystem",
+      "packages": [
+        "fs",
+        "fs/promises",
+        "graceful-fs",
+        "System.IO",
+        "System.IO.Compression"
+      ],
+      "symbol_patterns": [
+        "fs.*",
+        "*.readFile*",
+        "*.writeFile*",
+        "*.appendFile*",
+        "*.createReadStream*",
+        "*.createWriteStream*"
+      ],
+      "operation_overrides": {
+        "*.read*": "read",
+        "*.write*": "write",
+        "*.append*": "write",
+        "*.unlink*": "delete"
+      }
+    },
+    {
+      "boundary_type": "queue",
+      "packages": [
+        "bull",
+        "bullmq",
+        "amqplib",
+        "kafkajs",
+        "node-rdkafka",
+        "@aws-sdk/client-sqs",
+        "@google-cloud/pubsub"
+      ],
+      "symbol_patterns": [
+        "*.publish*",
+        "*.sendMessage*",
+        "*.consume*",
+        "*.process*",
+        "*.addJob*",
+        "*.enqueue*"
+      ],
+      "operation_overrides": {
+        "*.publish*": "publish",
+        "*.send*": "publish",
+        "*.enqueue*": "publish",
+        "*.consume*": "consume",
+        "*.process*": "consume"
+      }
+    },
+    {
+      "boundary_type": "cache",
+      "packages": [
+        "redis",
+        "ioredis",
+        "node-cache",
+        "lru-cache",
+        "@vercel/kv"
+      ],
+      "symbol_patterns": [
+        "*.get*",
+        "*.set*",
+        "*.del*",
+        "*.cache*"
+      ],
+      "operation_overrides": {
+        "*.get*": "cache_get",
+        "*.set*": "cache_put",
+        "*.del*": "delete"
+      }
+    },
+    {
+      "boundary_type": "auth",
+      "packages": [
+        "jsonwebtoken",
+        "jose",
+        "passport",
+        "@auth/core",
+        "next-auth",
+        "@clerk/backend",
+        "@supabase/supabase-js",
+        "System.Security.Cryptography",
+        "Org.BouncyCastle",
+        "Org.BouncyCastle.Bcpg",
+        "Org.BouncyCastle.Bcpg.OpenPgp",
+        "Org.BouncyCastle.Security",
+        "Microsoft.Identity.Client"
+      ],
+      "symbol_patterns": [
+        "*.verify*",
+        "*.authorize*",
+        "*.authenticate*",
+        "*.signIn*",
+        "*.signOut*"
+      ],
+      "operation_overrides": {
+        "*.authenticate*": "authenticate",
+        "*.authorize*": "authorize",
+        "*.verify*": "authenticate"
+      }
+    },
+    {
+      "boundary_type": "logging",
+      "packages": [
+        "pino",
+        "winston",
+        "bunyan",
+        "@opentelemetry/api",
+        "Microsoft.Extensions.Logging",
+        "Serilog",
+        "NLog"
+      ],
+      "symbol_patterns": [
+        "logger.*",
+        "*.info*",
+        "*.warn*",
+        "*.error*",
+        "*.debug*"
+      ],
+      "operation_overrides": {
+        "*.info*": "log",
+        "*.warn*": "log",
+        "*.error*": "log",
+        "*.debug*": "log"
+      }
+    },
+    {
+      "boundary_type": "metrics",
+      "packages": [
+        "prom-client",
+        "statsd-client",
+        "hot-shots",
+        "@opentelemetry/api",
+        "@opentelemetry/sdk-node"
+      ],
+      "symbol_patterns": [
+        "*.increment*",
+        "*.observe*",
+        "*.record*",
+        "*.histogram*",
+        "*.counter*",
+        "*.gauge*"
+      ],
+      "operation_overrides": {
+        "*.increment*": "measure",
+        "*.observe*": "measure",
+        "*.record*": "measure"
+      }
+    },
+    {
+      "boundary_type": "feature_flag",
+      "packages": [
+        "launchdarkly-node-server-sdk",
+        "@unleash/client",
+        "@statsig/node-core",
+        "posthog-node"
+      ],
+      "symbol_patterns": [
+        "*.variation*",
+        "*.isEnabled*",
+        "*.getFlag*",
+        "*.checkGate*"
+      ],
+      "operation_overrides": {
+        "*.variation*": "read",
+        "*.isEnabled*": "read",
+        "*.getFlag*": "read",
+        "*.checkGate*": "read"
+      }
+    },
+    {
+      "boundary_type": "config",
+      "packages": [
+        "dotenv",
+        "convict",
+        "nconf",
+        "envalid"
+      ],
+      "symbol_patterns": [
+        "process.env.*",
+        "config.*",
+        "*.getEnv*",
+        "*.loadConfig*"
+      ],
+      "operation_overrides": {
+        "*.get*": "read",
+        "*.load*": "read"
+      }
+    },
+    {
+      "boundary_type": "clock",
+      "packages": [],
+      "symbol_patterns": [
+        "Date.now",
+        "new Date",
+        "performance.now",
+        "*.now*"
+      ],
+      "operation_overrides": {
+        "*.now*": "read"
+      }
+    },
+    {
+      "boundary_type": "sftp",
+      "packages": [
+        "ssh2-sftp-client",
+        "Renci.SshNet",
+        "Renci.SshNet.Common"
+      ],
+      "symbol_patterns": [
+        "*.upload*",
+        "*.download*",
+        "*.listDirectory*",
+        "*.connect*"
+      ],
+      "operation_overrides": {
+        "*.upload*": "write",
+        "*.download*": "read",
+        "*.list*": "read",
+        "*.delete*": "delete"
+      }
+    },
+    {
+      "boundary_type": "ftp",
+      "packages": [
+        "System.Net",
+        "FluentFTP"
+      ],
+      "symbol_patterns": [
+        "FtpWebRequest.*",
+        "*.upload*",
+        "*.download*"
+      ],
+      "operation_overrides": {
+        "*.upload*": "write",
+        "*.download*": "read"
+      }
+    },
+    {
+      "boundary_type": "smtp",
+      "packages": [
+        "nodemailer",
+        "MailKit",
+        "MailKit.Net.Smtp",
+        "MailKit.Security",
+        "MimeKit",
+        "System.Net.Mail"
+      ],
+      "symbol_patterns": [
+        "*.send*",
+        "SmtpClient.*"
+      ],
+      "operation_overrides": {
+        "*.send*": "write"
+      }
+    },
+    {
+      "boundary_type": "cloud_storage",
+      "packages": [
+        "@aws-sdk/client-s3",
+        "@azure/storage-blob",
+        "@google-cloud/storage",
+        "Microsoft.Graph"
+      ],
+      "symbol_patterns": [
+        "*.putObject*",
+        "*.getObject*",
+        "*.upload*",
+        "*.download*"
+      ],
+      "operation_overrides": {
+        "*.put*": "write",
+        "*.upload*": "write",
+        "*.get*": "read",
+        "*.download*": "read"
+      }
+    },
+    {
+      "boundary_type": "pdf",
+      "packages": [
+        "pdfkit",
+        "pdf-lib",
+        "WebSupergoo.ABCpdf13",
+        "iTextSharp",
+        "QuestPDF"
+      ],
+      "symbol_patterns": [
+        "Doc.*",
+        "*.addPage*",
+        "*.save*"
+      ],
+      "operation_overrides": {
+        "*.save*": "write",
+        "*.addPage*": "write"
+      }
+    },
+    {
+      "boundary_type": "barcode",
+      "packages": [
+        "ZXing",
+        "ZXing.Common",
+        "SixLabors.ImageSharp",
+        "SixLabors.ImageSharp.Formats.Png"
+      ],
+      "symbol_patterns": [
+        "*.encode*",
+        "*.decode*",
+        "BarcodeWriter*"
+      ],
+      "operation_overrides": {
+        "*.encode*": "write",
+        "*.decode*": "read"
+      }
+    }
+  ]
+}

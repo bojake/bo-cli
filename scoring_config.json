@@ -1,0 +1,129 @@
+{
+  "version": "0.1.0",
+  "scope": {
+    "release": "v0.1",
+    "languages": ["typescript", "javascript"]
+  },
+  "rps": {
+    "formula_key": "rps_v0_1",
+    "weights": {
+      "cognitive_complexity_norm": 0.18,
+      "nesting_depth_norm": 0.07,
+      "loc_norm": 0.05,
+      "responsibility_spread_norm": 0.2,
+      "architectural_stress_norm": 0.15,
+      "change_pain_norm": 0.15,
+      "context_burden_norm": 0.2
+    },
+    "responsibility_spread_weights": {
+      "boundary_type_count_norm": 0.3,
+      "dependency_category_norm": 0.25,
+      "capability_cluster_norm": 0.25,
+      "side_effect_class_norm": 0.2
+    },
+    "architectural_stress_weights": {
+      "fan_in_norm": 0.25,
+      "fan_out_norm": 0.25,
+      "centrality_norm": 0.2,
+      "circular_dependency_risk_norm": 0.15,
+      "import_diversity_norm": 0.15
+    },
+    "normalization_ceilings": {
+      "cognitive_complexity": 500,
+      "nesting_depth": 8,
+      "loc": 3000,
+      "fan_in": 20,
+      "fan_out": 20,
+      "responsibility_spread": 100,
+      "context_burden_files": 20
+    },
+    "change_pain_weights": {
+      "churn_norm": 0.3,
+      "change_coupling_norm": 0.25,
+      "rework_norm": 0.15,
+      "revert_norm": 0.1,
+      "bugfix_proxy_norm": 0.1,
+      "test_fragility_proxy_norm": 0.1
+    },
+    "context_burden_weights": {
+      "safe_edit_file_count_norm": 0.25,
+      "safe_edit_symbol_count_norm": 0.2,
+      "safe_edit_token_cost_norm": 0.3,
+      "compression_ratio_required_norm": 0.15,
+      "ambiguity_score_norm": 0.1
+    },
+    "thresholds": {
+      "none_max": 34,
+      "observe_min": 35,
+      "observe_max": 49,
+      "suggest_refactor_min": 50,
+      "suggest_refactor_max": 64,
+      "strong_pivot_min": 65,
+      "strong_pivot_max": 79,
+      "refactor_now_min": 80
+    },
+    "hard_pivot_gates": {
+      "responsibility_overload": {
+        "enabled": true,
+        "minimum_responsibility_clusters": 4
+      },
+      "context_overload": {
+        "enabled": true,
+        "safe_edit_file_count": 8,
+        "safe_edit_token_cost": 12000
+      },
+      "high_churn_hotspot": {
+        "enabled": true,
+        "repo_churn_percentile": 90,
+        "minimum_architectural_stress_percentile": 50
+      },
+      "dependency_hub_instability": {
+        "enabled": true,
+        "minimum_fan_in": 15,
+        "minimum_fan_out": 15,
+        "minimum_fan_in_percentile": 80,
+        "minimum_fan_out_percentile": 80,
+        "requires_recent_breaking_change_proxy": true
+      },
+      "god_class": {
+        "enabled": true,
+        "loc": 500,
+        "cognitive_complexity": 120
+      },
+      "extreme_complexity": {
+        "enabled": true,
+        "cognitive_complexity": 1000
+      }
+    },
+    "driver_thresholds": {
+      "cognitive_complexity_norm": 50,
+      "nesting_depth_norm": 50,
+      "loc_norm": 50,
+      "responsibility_spread_norm": 40,
+      "architectural_stress_norm": 50,
+      "fan_out_norm": 50
+    }
+  },
+  "context_burden": {
+    "safe_edit_algorithm": {
+      "seed_nodes": [
+        "target_symbol",
+        "direct_callers",
+        "direct_callees",
+        "referenced_contracts",
+        "boundaries_touched",
+        "tests_targeting_symbol"
+      ],
+      "expansion_rules": [
+        "expand to public exported callers if target is exported",
+        "expand to dependency edges with confidence >= 0.6",
+        "expand to change-coupled files when coupling_strength >= 0.7"
+      ]
+    }
+  },
+  "status_policy": {
+    "default_confidence_floor": 0.6,
+    "mark_partial_when_lsp_missing": true,
+    "mark_needs_reindex_when_file_hash_changes": true
+  }
+}

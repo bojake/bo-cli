@@ -1,0 +1,85 @@
+{
+  "version": "0.1.0",
+  "notes": [
+    "Rules for placing extracted implementations and generated interfaces.",
+    "Layer markers are matched against namespaces and normalized paths case-insensitively.",
+    "Application contract promotion is allowed only when referenced types are in allowed layers and not in disallowed layers."
+  ],
+  "interfacePlacement": {
+    "sourceRootDirectoryNames": [
+      "src"
+    ],
+    "fallbackNamespace": "Extracted",
+    "abstractionLayerNames": [
+      "Application"
+    ],
+    "abstractionDirectoryNames": [
+      "Abstractions",
+      "Interfaces",
+      "Contracts"
+    ],
+    "preferredAbstractionDirectoryNames": [
+      "Abstractions"
+    ],
+    "preferredExistingInterfacePathContains": [
+      ".Application/Abstractions/",
+      "Application/Abstractions/"
+    ],
+    "allowedContractLayers": [
+      "domain",
+      "application"
+    ],
+    "disallowedContractLayers": [
+      "infrastructure",
+      "web",
+      "worker"
+    ],
+    "layers": [
+      {
+        "name": "domain",
+        "namespaceMarkers": [
+          ".Domain"
+        ],
+        "namespacePrefixes": [
+          "Domain"
+        ]
+      },
+      {
+        "name": "application",
+        "namespaceMarkers": [
+          ".Application"
+        ],
+        "namespacePrefixes": [
+          "Application"
+        ]
+      },
+      {
+        "name": "infrastructure",
+        "namespaceMarkers": [
+          ".Infrastructure"
+        ],
+        "namespacePrefixes": [
+          "Infrastructure"
+        ]
+      },
+      {
+        "name": "web",
+        "namespaceMarkers": [
+          ".Web"
+        ],
+        "namespacePrefixes": [
+          "Web"
+        ]
+      },
+      {
+        "name": "worker",
+        "namespaceMarkers": [
+          ".Worker"
+        ],
+        "namespacePrefixes": [
+          "Worker"
+        ]
+      }
+    ]
+  }
+}

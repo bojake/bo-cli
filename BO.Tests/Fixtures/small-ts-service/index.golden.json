@@ -1,0 +1,457 @@
+{
+  "Fixture": "small-ts-service",
+  "FilesScanned": 3,
+  "FilesParsed": 3,
+  "SymbolsIndexed": 10,
+  "ContractsIndexed": 7,
+  "DependenciesIndexed": 2,
+  "SymbolDependenciesIndexed": 4,
+  "BoundariesIndexed": 0,
+  "EffectProfilesIndexed": 0,
+  "ComplexityProfilesIndexed": 9,
+  "ResponsibilityProfilesIndexed": 3,
+  "RefactorPressureScoresIndexed": 3,
+  "RefactorDecisionsIndexed": 0,
+  "SeamExtractionPlansIndexed": 0,
+  "ModuleCount": 3,
+  "Warnings": [],
+  "Files": [
+    {
+      "Path": "src/core/greeter.ts",
+      "Language": "typescript",
+      "IsTest": false,
+      "IsGenerated": false,
+      "Module": "src/core"
+    },
+    {
+      "Path": "src/http/handlers.ts",
+      "Language": "typescript",
+      "IsTest": false,
+      "IsGenerated": false,
+      "Module": "src/http"
+    },
+    {
+      "Path": "src/index.ts",
+      "Language": "typescript",
+      "IsTest": false,
+      "IsGenerated": false,
+      "Module": "src"
+    }
+  ],
+  "Symbols": [
+    {
+      "File": "src/core/greeter.ts",
+      "QualifiedName": "FriendlyGreeter",
+      "DisplayName": "FriendlyGreeter",
+      "Kind": "class",
+      "IsExported": true
+    },
+    {
+      "File": "src/core/greeter.ts",
+      "QualifiedName": "FriendlyGreeter.constructor",
+      "DisplayName": "constructor",
+      "Kind": "constructor",
+      "IsExported": false
+    },
+    {
+      "File": "src/core/greeter.ts",
+      "QualifiedName": "FriendlyGreeter.format",
+      "DisplayName": "format",
+      "Kind": "method",
+      "IsExported": false
+    },
+    {
+      "File": "src/core/greeter.ts",
+      "QualifiedName": "FriendlyGreeter.greet",
+      "DisplayName": "greet",
+      "Kind": "method",
+      "IsExported": false
+    },
+    {
+      "File": "src/core/greeter.ts",
+      "QualifiedName": "Greeter",
+      "DisplayName": "Greeter",
+      "Kind": "interface",
+      "IsExported": true
+    },
+    {
+      "File": "src/core/greeter.ts",
+      "QualifiedName": "buildGreeting",
+      "DisplayName": "buildGreeting",
+      "Kind": "variable",
+      "IsExported": true
+    },
+    {
+      "File": "src/core/greeter.ts",
+      "QualifiedName": "prefixValue",
+      "DisplayName": "prefixValue",
+      "Kind": "function",
+      "IsExported": false
+    },
+    {
+      "File": "src/http/handlers.ts",
+      "QualifiedName": "handlePing",
+      "DisplayName": "handlePing",
+      "Kind": "function",
+      "IsExported": true
+    },
+    {
+      "File": "src/http/handlers.ts",
+      "QualifiedName": "routeConfig",
+      "DisplayName": "routeConfig",
+      "Kind": "variable",
+      "IsExported": true
+    },
+    {
+      "File": "src/index.ts",
+      "QualifiedName": "bootstrap",
+      "DisplayName": "bootstrap",
+      "Kind": "function",
+      "IsExported": true
+    }
+  ],
+  "Contracts": [
+    {
+      "SymbolQualifiedName": "FriendlyGreeter.constructor",
+      "InputTypes": [
+        "string"
+      ],
+      "OutputTypes": [
+        "FriendlyGreeter"
+      ],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "FriendlyGreeter.format",
+      "InputTypes": [
+        "string"
+      ],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "FriendlyGreeter.greet",
+      "InputTypes": [
+        "string"
+      ],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "bootstrap",
+      "InputTypes": [],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "buildGreeting",
+      "InputTypes": [
+        "string"
+      ],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "handlePing",
+      "InputTypes": [
+        "unknown"
+      ],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "async"
+    },
+    {
+      "SymbolQualifiedName": "prefixValue",
+      "InputTypes": [],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    }
+  ],
+  "Dependencies": [
+    {
+      "FromFile": "src/index.ts",
+      "ToFile": "src/core/greeter.ts",
+      "ImportText": "./core/greeter"
+    },
+    {
+      "FromFile": "src/index.ts",
+      "ToFile": "src/http/handlers.ts",
+      "ImportText": "./http/handlers"
+    }
+  ],
+  "SymbolDependencies": [
+    {
+      "FromSymbol": "FriendlyGreeter.greet",
+      "ToSymbol": "prefixValue",
+      "RelationType": "calls",
+      "Evidence": "prefixValue"
+    },
+    {
+      "FromSymbol": "bootstrap",
+      "ToSymbol": "FriendlyGreeter.greet",
+      "RelationType": "calls",
+      "Evidence": "greeter.greet"
+    },
+    {
+      "FromSymbol": "bootstrap",
+      "ToSymbol": "handlePing",
+      "RelationType": "calls",
+      "Evidence": "handlePing"
+    },
+    {
+      "FromSymbol": "bootstrap",
+      "ToSymbol": "FriendlyGreeter",
+      "RelationType": "instantiates",
+      "Evidence": "new FriendlyGreeter"
+    }
+  ],
+  "Boundaries": [],
+  "EffectProfiles": [],
+  "ComplexityProfiles": [
+    {
+      "Target": "src/core/greeter.ts",
+      "TargetKind": "file",
+      "Loc": 15,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 2,
+      "ParameterCount": 4,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 1,
+      "FanOut": 0
+    },
+    {
+      "Target": "src/http/handlers.ts",
+      "TargetKind": "file",
+      "Loc": 6,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 1,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 1,
+      "FanOut": 0
+    },
+    {
+      "Target": "src/index.ts",
+      "TargetKind": "file",
+      "Loc": 9,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 0,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 2
+    },
+    {
+      "Target": "FriendlyGreeter.constructor",
+      "TargetKind": "symbol",
+      "Loc": 1,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 1,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "FriendlyGreeter.format",
+      "TargetKind": "symbol",
+      "Loc": 1,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 0,
+      "ParameterCount": 1,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "FriendlyGreeter.greet",
+      "TargetKind": "symbol",
+      "Loc": 3,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 1,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "bootstrap",
+      "TargetKind": "symbol",
+      "Loc": 5,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 0,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "handlePing",
+      "TargetKind": "symbol",
+      "Loc": 3,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 1,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "prefixValue",
+      "TargetKind": "symbol",
+      "Loc": 3,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 0,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    }
+  ],
+  "ResponsibilityProfiles": [
+    {
+      "File": "src/core/greeter.ts",
+      "BoundaryTypeCount": 0,
+      "DependencyCategoryCount": 0,
+      "CapabilityClusterCount": 0,
+      "SideEffectClassCount": 0,
+      "ResponsibilitySpreadScore": 0,
+      "DominantResponsibilities": []
+    },
+    {
+      "File": "src/http/handlers.ts",
+      "BoundaryTypeCount": 0,
+      "DependencyCategoryCount": 0,
+      "CapabilityClusterCount": 0,
+      "SideEffectClassCount": 0,
+      "ResponsibilitySpreadScore": 0,
+      "DominantResponsibilities": []
+    },
+    {
+      "File": "src/index.ts",
+      "BoundaryTypeCount": 0,
+      "DependencyCategoryCount": 1,
+      "CapabilityClusterCount": 0,
+      "SideEffectClassCount": 0,
+      "ResponsibilitySpreadScore": 8,
+      "DominantResponsibilities": []
+    }
+  ],
+  "RefactorPressureScores": [
+    {
+      "File": "src/core/greeter.ts",
+      "Score": 4.88,
+      "Recommendation": "none",
+      "Drivers": [],
+      "FiredGates": [],
+      "Confidence": 0.85
+    },
+    {
+      "File": "src/http/handlers.ts",
+      "Score": 3.84,
+      "Recommendation": "none",
+      "Drivers": [],
+      "FiredGates": [],
+      "Confidence": 0.85
+    },
+    {
+      "File": "src/index.ts",
+      "Score": 6.16,
+      "Recommendation": "none",
+      "Drivers": [],
+      "FiredGates": [],
+      "Confidence": 0.85
+    }
+  ],
+  "RefactorDecisions": [],
+  "SeamExtractionPlans": [],
+  "Graph": {
+    "NodeCount": 39,
+    "EdgeCount": 57,
+    "NodeLabels": [
+      "BoundaryInteraction",
+      "ComplexityProfile",
+      "Contract",
+      "EffectProfile",
+      "File",
+      "Module",
+      "RefactorDecision",
+      "RefactorPressureScore",
+      "Repo",
+      "ResponsibilityProfile",
+      "SeamExtractionPlan",
+      "Symbol"
+    ],
+    "EdgeLabels": [
+      "CALLS",
+      "CONTAINS_FILE",
+      "CONTAINS_MODULE",
+      "CONTAINS_SYMBOL",
+      "CROSSES_BOUNDARY",
+      "DEFINES_SYMBOL",
+      "HAS_COMPLEXITY_PROFILE",
+      "HAS_CONTRACT",
+      "HAS_EFFECT_PROFILE",
+      "HAS_EXTRACTION_PLAN",
+      "HAS_REFACTOR_DECISION",
+      "HAS_RESPONSIBILITY_PROFILE",
+      "HAS_RPS",
+      "IMPORTS",
+      "INSTANTIATES",
+      "MODULE_CONTAINS_FILE",
+      "USES_TYPE"
+    ]
+  }
+}

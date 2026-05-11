@@ -1,0 +1,335 @@
+{
+  "Fixture": "js-commonjs",
+  "FilesScanned": 3,
+  "FilesParsed": 3,
+  "SymbolsIndexed": 6,
+  "ContractsIndexed": 5,
+  "DependenciesIndexed": 0,
+  "SymbolDependenciesIndexed": 0,
+  "BoundariesIndexed": 0,
+  "EffectProfilesIndexed": 0,
+  "ComplexityProfilesIndexed": 7,
+  "ResponsibilityProfilesIndexed": 3,
+  "RefactorPressureScoresIndexed": 3,
+  "RefactorDecisionsIndexed": 0,
+  "SeamExtractionPlansIndexed": 0,
+  "ModuleCount": 1,
+  "Warnings": [],
+  "Files": [
+    {
+      "Path": "lib/index.js",
+      "Language": "javascript",
+      "IsTest": false,
+      "IsGenerated": false,
+      "Module": "lib"
+    },
+    {
+      "Path": "lib/math.js",
+      "Language": "javascript",
+      "IsTest": false,
+      "IsGenerated": false,
+      "Module": "lib"
+    },
+    {
+      "Path": "lib/webhook.js",
+      "Language": "javascript",
+      "IsTest": false,
+      "IsGenerated": false,
+      "Module": "lib"
+    }
+  ],
+  "Symbols": [
+    {
+      "File": "lib/index.js",
+      "QualifiedName": "Worker",
+      "DisplayName": "Worker",
+      "Kind": "class",
+      "IsExported": true
+    },
+    {
+      "File": "lib/index.js",
+      "QualifiedName": "Worker.constructor",
+      "DisplayName": "constructor",
+      "Kind": "constructor",
+      "IsExported": false
+    },
+    {
+      "File": "lib/index.js",
+      "QualifiedName": "Worker.run",
+      "DisplayName": "run",
+      "Kind": "method",
+      "IsExported": false
+    },
+    {
+      "File": "lib/math.js",
+      "QualifiedName": "multiply",
+      "DisplayName": "multiply",
+      "Kind": "variable",
+      "IsExported": true
+    },
+    {
+      "File": "lib/math.js",
+      "QualifiedName": "sum",
+      "DisplayName": "sum",
+      "Kind": "function",
+      "IsExported": true
+    },
+    {
+      "File": "lib/webhook.js",
+      "QualifiedName": "handleWebhook",
+      "DisplayName": "handleWebhook",
+      "Kind": "function",
+      "IsExported": true
+    }
+  ],
+  "Contracts": [
+    {
+      "SymbolQualifiedName": "Worker.constructor",
+      "InputTypes": [],
+      "OutputTypes": [
+        "Worker"
+      ],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "Worker.run",
+      "InputTypes": [],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "handleWebhook",
+      "InputTypes": [],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "multiply",
+      "InputTypes": [],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    },
+    {
+      "SymbolQualifiedName": "sum",
+      "InputTypes": [],
+      "OutputTypes": [],
+      "GenericConstraints": [],
+      "ThrowsOrErrorModes": [],
+      "AcceptsNullableInput": false,
+      "ReturnsNullableOutput": false,
+      "HasOptionalParameters": false,
+      "AsyncMode": "sync"
+    }
+  ],
+  "Dependencies": [],
+  "SymbolDependencies": [],
+  "Boundaries": [],
+  "EffectProfiles": [],
+  "ComplexityProfiles": [
+    {
+      "Target": "lib/index.js",
+      "TargetKind": "file",
+      "Loc": 7,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 2,
+      "ParameterCount": 0,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "lib/math.js",
+      "TargetKind": "file",
+      "Loc": 5,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 4,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "lib/webhook.js",
+      "TargetKind": "file",
+      "Loc": 4,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 2,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "Worker.constructor",
+      "TargetKind": "symbol",
+      "Loc": 1,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 0,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "Worker.run",
+      "TargetKind": "symbol",
+      "Loc": 3,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 0,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "handleWebhook",
+      "TargetKind": "symbol",
+      "Loc": 3,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 2,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    },
+    {
+      "Target": "sum",
+      "TargetKind": "symbol",
+      "Loc": 3,
+      "CognitiveComplexity": 0,
+      "CyclomaticComplexity": 1,
+      "NestingDepth": 1,
+      "ParameterCount": 2,
+      "BranchCount": 0,
+      "SideEffectCount": 0,
+      "FanIn": 0,
+      "FanOut": 0
+    }
+  ],
+  "ResponsibilityProfiles": [
+    {
+      "File": "lib/index.js",
+      "BoundaryTypeCount": 0,
+      "DependencyCategoryCount": 0,
+      "CapabilityClusterCount": 0,
+      "SideEffectClassCount": 0,
+      "ResponsibilitySpreadScore": 0,
+      "DominantResponsibilities": []
+    },
+    {
+      "File": "lib/math.js",
+      "BoundaryTypeCount": 0,
+      "DependencyCategoryCount": 0,
+      "CapabilityClusterCount": 0,
+      "SideEffectClassCount": 0,
+      "ResponsibilitySpreadScore": 0,
+      "DominantResponsibilities": []
+    },
+    {
+      "File": "lib/webhook.js",
+      "BoundaryTypeCount": 0,
+      "DependencyCategoryCount": 0,
+      "CapabilityClusterCount": 0,
+      "SideEffectClassCount": 0,
+      "ResponsibilitySpreadScore": 0,
+      "DominantResponsibilities": []
+    }
+  ],
+  "RefactorPressureScores": [
+    {
+      "File": "lib/index.js",
+      "Score": 2.07,
+      "Recommendation": "none",
+      "Drivers": [],
+      "FiredGates": [],
+      "Confidence": 0.85
+    },
+    {
+      "File": "lib/math.js",
+      "Score": 1.04,
+      "Recommendation": "none",
+      "Drivers": [],
+      "FiredGates": [],
+      "Confidence": 0.85
+    },
+    {
+      "File": "lib/webhook.js",
+      "Score": 1.04,
+      "Recommendation": "none",
+      "Drivers": [],
+      "FiredGates": [],
+      "Confidence": 0.85
+    }
+  ],
+  "RefactorDecisions": [],
+  "SeamExtractionPlans": [],
+  "Graph": {
+    "NodeCount": 29,
+    "EdgeCount": 37,
+    "NodeLabels": [
+      "BoundaryInteraction",
+      "ComplexityProfile",
+      "Contract",
+      "EffectProfile",
+      "File",
+      "Module",
+      "RefactorDecision",
+      "RefactorPressureScore",
+      "Repo",
+      "ResponsibilityProfile",
+      "SeamExtractionPlan",
+      "Symbol"
+    ],
+    "EdgeLabels": [
+      "CALLS",
+      "CONTAINS_FILE",
+      "CONTAINS_MODULE",
+      "CONTAINS_SYMBOL",
+      "CROSSES_BOUNDARY",
+      "DEFINES_SYMBOL",
+      "HAS_COMPLEXITY_PROFILE",
+      "HAS_CONTRACT",
+      "HAS_EFFECT_PROFILE",
+      "HAS_EXTRACTION_PLAN",
+      "HAS_REFACTOR_DECISION",
+      "HAS_RESPONSIBILITY_PROFILE",
+      "HAS_RPS",
+      "IMPORTS",
+      "INSTANTIATES",
+      "MODULE_CONTAINS_FILE",
+      "USES_TYPE"
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "version": "0.1.0",
+  "notes": [
+    "Rules are evaluated in order. Put more specific domains before broader domains.",
+    "Support-domain rules are used before generic method-name domain rules."
+  ],
+  "supportDomains": [
+    {
+      "domain": "sql_transform",
+      "qualifiedNameContains": ["SqlTransform", "TransformFilter"],
+      "exactMethodNames": ["Apply", "Transform", "CreateFilter"],
+      "methodContains": []
+    },
+    {
+      "domain": "workflow_support",
+      "methodContains": ["Structured", "SubWorkflow", "SetVariable", "Fail", "Variable", "Prompt", "ElementValue", "WorkflowCursor"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "graph_drive_support",
+      "methodContains": ["OneDrive", "SharePoint", "GraphSettings", "GraphItemContent", "EscapeGraphPath"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "graph_api_support",
+      "methodContains": ["Graph", "M365"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "ftp_support",
+      "methodContains": ["Ftp", "Sftp"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "ssh_support",
+      "methodContains": ["Ssh", "Fingerprint"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "pdf_support",
+      "methodContains": ["Pdf", "Barcode", "QrCode", "Watermark"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "json_document_support",
+      "methodContains": ["Json", "Xml"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "media_document_support",
+      "methodContains": ["Media", "Attachment", "Recipient", "MimeType"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "document_support",
+      "methodContains": ["Pdf", "Json", "Xml", "Hash", "MimeType", "Media", "Path", "Recipient"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "config_support",
+      "methodContains": ["Config", "JsonObject", "JsonString", "ParseJson", "TryResolveJsonPath", "RequiredGuid", "ReadGuid", "Token", "Template"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "orchestration_runtime_support",
+      "methodContains": ["Trace", "Retry", "DeadLetter", "RunState", "License", "WorkflowCursor"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "crypto_support",
+      "methodContains": ["Encrypt", "Decrypt", "Signing", "Cipher", "PrivateKey", "HostKey"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "export_support",
+      "methodContains": ["Excel", "Csv", "Export", "ReadRows", "ReadColumns", "ReadMap", "FormatCell"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "content_support",
+      "methodContains": ["Feed", "Atom", "Html", "Text", "XPost", "ExternalId"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "filesystem_support",
+      "methodContains": ["Attachment", "Directory", "Path", "CodeImage", "DownloadDestination", "UnixPath"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "runtime_support",
+      "methodContains": ["Trace", "Retry", "Cancellation", "Canceled", "Feature", "ResourceAsync", "AgentToken"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    },
+    {
+      "domain": "notification_support",
+      "methodContains": ["Alert"],
+      "qualifiedNameContains": [],
+      "exactMethodNames": []
+    }
+  ],
+  "methodDomains": [
+    { "domain": "social", "keywords": ["SocialPost", "XPoll"] },
+    { "domain": "rss", "keywords": ["Rss"] },
+    { "domain": "graph", "keywords": ["OneDrive", "SharePoint", "M365"] },
+    { "domain": "workflow", "keywords": ["Structured", "SetVariable", "IncrementVariable", "JsonExtract", "SimpleScript", "Prompt", "Variable", "Fail"] },
+    { "domain": "ftp", "keywords": ["Ftp"] },
+    { "domain": "ssh", "keywords": ["Ssh"] },
+    { "domain": "sftp", "keywords": ["Sftp"] },
+    { "domain": "smtp", "keywords": ["Smtp"] },
+    { "domain": "email", "keywords": ["Email"] },
+    { "domain": "pgp", "keywords": ["Pgp"] },
+    { "domain": "http", "keywords": ["Http"] },
+    { "domain": "sql", "keywords": ["Sql"] },
+    { "domain": "pdf", "keywords": ["Pdf"] },
+    { "domain": "python", "keywords": ["Python"] },
+    { "domain": "agent", "keywords": ["Agent"] },
+    { "domain": "notification", "keywords": ["Notification"] },
+    { "domain": "archive", "keywords": ["Zip", "Archive"] },
+    { "domain": "graph", "keywords": ["Graph"] },
+    { "domain": "file", "keywords": ["File"] },
+    { "domain": "workflow", "keywords": ["SubWorkflow", "InvokeWorkflow"] },
+    { "domain": "control_flow", "keywords": ["ForEach", "TryCatch", "Condition"] },
+    { "domain": "maintenance", "keywords": ["Retention"] },
+    { "domain": "file", "keywords": ["Checksum"] }
+  ],
+  "defaultMethodDomain": "core_orchestration",
+  "coreHelperFallbackDomain": "helper_support"
+}

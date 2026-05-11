@@ -1,0 +1,372 @@
+{
+  "schema_version": "0.1.0",
+  "product": "BO",
+  "scope": {
+    "release": "v0.1",
+    "languages": ["typescript", "javascript"],
+    "goals": [
+      "deterministic code intelligence",
+      "refactor pressure scoring",
+      "safe-edit context planning",
+      "backend-neutral planning artifacts"
+    ],
+    "non_goals": [
+      "multi-language parity",
+      "full behavioral equivalence detection",
+      "automatic patch generation",
+      "org-wide reuse recommendation engine"
+    ]
+  },
+  "persistence": {
+    "primary_backend": "bogdb",
+    "primary_backend_runtime": ".NET 10",
+    "primary_backend_mode": "embedded graph database",
+    "reference_projection": "storage_schema.sql",
+    "notes": [
+      "BogDB is the source-of-truth persistence target for BO graph storage.",
+      "The SQL schema is a compatibility and validation projection, not the preferred runtime backend."
+    ]
+  },
+  "common": {
+    "metadata_fields": {
+      "id": "string",
+      "source_kind": "enum",
+      "source_version": "string",
+      "computed_at": "timestamp",
+      "confidence": "float",
+      "staleness_hint": "enum"
+    },
+    "enums": {
+      "source_kind": ["ast", "lsp", "type_checker", "build_system", "git", "test_parser", "inference"],
+      "staleness_hint": ["fresh", "needs_reindex", "partial", "unknown"],
+      "language_kind": ["typescript", "javascript"],
+      "symbol_kind": ["function", "method", "class", "interface", "type_alias", "constant", "variable", "constructor", "endpoint_handler", "job_handler", "test_case", "module_initializer", "unknown"],
+      "visibility_kind": ["public", "protected", "private", "internal", "unknown"],
+      "module_kind": ["package", "namespace", "folder_module", "service", "library", "application", "unknown"],
+      "boundary_type": ["db", "http", "filesystem", "queue", "cache", "auth", "metrics", "logging", "clock", "feature_flag", "config", "unknown"],
+      "operation_type": ["read", "write", "delete", "publish", "consume", "authenticate", "authorize", "serialize", "deserialize", "measure", "log", "cache_get", "cache_put", "unknown"],
+      "relation_type": ["defines", "contains", "imports", "calls", "instantiates", "implements", "extends", "uses_type", "reads_from", "writes_to", "publishes_to", "subscribes_to", "tests", "changed_with", "crosses_boundary", "unknown"],
+      "workflow_role": ["orchestration", "validation", "policy", "mapping", "persistence", "transport", "integration", "caching", "auditing", "security", "computation", "unknown"]
+    }
+  },
+  "entities": {
+    "Repo": {
+      "table": "repos",
+      "fields": {
+        "id": "string",
+        "name": "string",
+        "root_path": "string",
+        "default_branch": "string",
+        "languages": "json_array",
+        "build_systems": "json_array",
+        "package_managers": "json_array",
+        "entrypoints": "json_array",
+        "remote_urls": "json_array",
+        "index_version": "string",
+        "last_indexed_at": "timestamp"
+      }
+    },
+    "File": {
+      "table": "files",
+      "fields": {
+        "id": "string",
+        "repo_id": "string",
+        "path": "string",
+        "normalized_path": "string",
+        "language": "language_kind",
+        "content_hash": "string",
+        "size_bytes": "integer",
+        "loc": "integer",
+        "is_test": "boolean",
+        "is_generated": "boolean",
+        "module_id": "string|null",
+        "parse_status": "string"
+      }
+    },
+    "Module": {
+      "table": "modules",
+      "fields": {
+        "id": "string",
+        "repo_id": "string",
+        "name": "string",
+        "qualified_name": "string",
+        "kind": "module_kind",
+        "file_ids": "json_array",
+        "public_symbol_ids": "json_array",
+        "dependency_ids": "json_array",
+        "boundary_types": "json_array",
+        "fan_in": "integer",
+        "fan_out": "integer",
+        "cohesion_score": "float",
+        "instability_score": "float"
+      }
+    },
+    "Symbol": {
+      "table": "symbols",
+      "fields": {
+        "id": "string",
+        "repo_id": "string",
+        "file_id": "string",
+        "module_id": "string|null",
+        "qualified_name": "string",
+        "display_name": "string",
+        "kind": "symbol_kind",
+        "language": "language_kind",
+        "visibility": "visibility_kind",
+        "signature": "string",
+        "span_start": "integer",
+        "span_end": "integer",
+        "is_exported": "boolean",
+        "is_entrypoint": "boolean",
+        "is_test_subject": "boolean",
+        "doc_hash": "string|null"
+      }
+    },
+    "Contract": {
+      "table": "contracts",
+      "fields": {
+        "id": "string",
+        "symbol_id": "string",
+        "input_types": "json_array",
+        "output_types": "json_array",
+        "generic_constraints": "json_array",
+        "throws_or_error_modes": "json_array",
+        "schema_shapes": "json_array",
+        "nullability": "json_object",
+        "async_mode": "string"
+      }
+    },
+    "DependencyEdge": {
+      "table": "dependency_edges",
+      "fields": {
+        "id": "string",
+        "from_id": "string",
+        "to_id": "string",
+        "from_kind": "string",
+        "to_kind": "string",
+        "relation_type": "relation_type",
+        "strength": "float",
+        "is_runtime": "boolean",
+        "is_compile_time": "boolean",
+        "is_test_only": "boolean",
+        "evidence": "json_array"
+      }
+    },
+    "BoundaryInteraction": {
+      "table": "boundary_interactions",
+      "fields": {
+        "id": "string",
+        "symbol_id": "string",
+        "boundary_type": "boundary_type",
+        "operation_type": "operation_type",
+        "target_name": "string",
+        "effect_mode": "string",
+        "framework_hint": "string|null",
+        "evidence_spans": "json_array"
+      }
+    },
+    "EffectProfile": {
+      "table": "effect_profiles",
+      "fields": {
+        "id": "string",
+        "symbol_id": "string",
+        "reads_state": "boolean",
+        "writes_state": "boolean",
+        "emits_events": "boolean",
+        "calls_external_service": "boolean",
+        "mutates_input": "boolean",
+        "has_retry_logic": "boolean",
+        "has_transaction_logic": "boolean",
+        "has_auth_logic": "boolean",
+        "has_validation_logic": "boolean",
+        "has_caching_logic": "boolean",
+        "has_logging_logic": "boolean",
+        "side_effect_classes": "json_array"
+      }
+    },
+    "ComplexityProfile": {
+      "table": "complexity_profiles",
+      "fields": {
+        "id": "string",
+        "target_id": "string",
+        "target_kind": "string",
+        "loc": "integer",
+        "cognitive_complexity": "integer",
+        "cyclomatic_complexity": "integer",
+        "nesting_depth": "integer",
+        "parameter_count": "integer",
+        "branch_count": "integer",
+        "side_effect_count": "integer",
+        "fan_in": "integer",
+        "fan_out": "integer"
+      }
+    },
+    "ResponsibilityProfile": {
+      "table": "responsibility_profiles",
+      "fields": {
+        "id": "string",
+        "target_id": "string",
+        "boundary_type_count": "integer",
+        "dependency_category_count": "integer",
+        "capability_cluster_count": "integer",
+        "side_effect_class_count": "integer",
+        "responsibility_spread_score": "float",
+        "dominant_responsibilities": "json_array"
+      }
+    },
+    "ContextBurdenProfile": {
+      "table": "context_burden_profiles",
+      "fields": {
+        "id": "string",
+        "target_id": "string",
+        "safe_edit_file_count": "integer",
+        "safe_edit_symbol_count": "integer",
+        "safe_edit_token_cost": "integer",
+        "compression_ratio_required": "float",
+        "ambiguity_score": "float",
+        "subsystem_count_involved": "integer",
+        "context_burden_score": "float"
+      }
+    },
+    "ChangeEvent": {
+      "table": "change_events",
+      "fields": {
+        "id": "string",
+        "repo_id": "string",
+        "commit_hash": "string",
+        "author": "string",
+        "timestamp": "timestamp",
+        "file_ids": "json_array",
+        "symbol_ids": "json_array",
+        "insertions": "integer",
+        "deletions": "integer",
+        "message_hash": "string",
+        "is_revert": "boolean",
+        "is_bugfix_proxy": "boolean"
+      }
+    },
+    "ChangeCouplingProfile": {
+      "table": "change_coupling_profiles",
+      "fields": {
+        "id": "string",
+        "target_id": "string",
+        "coupled_target_ids": "json_array",
+        "coupling_frequency": "integer",
+        "coupling_strength": "float",
+        "window_days": "integer"
+      }
+    },
+    "TestArtifact": {
+      "table": "test_artifacts",
+      "fields": {
+        "id": "string",
+        "repo_id": "string",
+        "file_id": "string",
+        "symbol_id": "string|null",
+        "test_kind": "string",
+        "target_symbol_ids": "json_array",
+        "fixture_shapes": "json_array",
+        "assertion_patterns": "json_array",
+        "boundary_mocks": "json_array",
+        "invariant_signals": "json_array"
+      }
+    },
+    "CapabilityFingerprint": {
+      "table": "capability_fingerprints",
+      "fields": {
+        "id": "string",
+        "target_id": "string",
+        "entities": "json_array",
+        "boundary_types": "json_array",
+        "effect_types": "json_array",
+        "workflow_role": "workflow_role",
+        "dependency_categories": "json_array",
+        "caller_classes": "json_array",
+        "runtime_characteristics": "json_array",
+        "security_characteristics": "json_array"
+      }
+    },
+    "RefactorPressureScore": {
+      "table": "refactor_pressure_scores",
+      "fields": {
+        "id": "string",
+        "target_id": "string",
+        "local_complexity_score": "float",
+        "responsibility_spread_score": "float",
+        "architectural_stress_score": "float",
+        "change_pain_score": "float",
+        "context_burden_score": "float",
+        "rps": "float",
+        "trigger_class": "string"
+      }
+    },
+    "RefactorDecision": {
+      "table": "refactor_decisions",
+      "fields": {
+        "id": "string",
+        "target_id": "string",
+        "rps_record_id": "string",
+        "complexity_profile_id": "string|null",
+        "responsibility_profile_id": "string|null",
+        "context_burden_profile_id": "string|null",
+        "change_coupling_profile_id": "string|null",
+        "drivers": "json_array",
+        "hard_gates_triggered": "json_array",
+        "recommended_pivot_type": "string",
+        "risk_level": "string",
+        "estimated_rps_after": "float|null",
+        "estimated_context_after": "float|null",
+        "created_at": "timestamp"
+      }
+    },
+    "PlanArtifact": {
+      "table": "plan_artifacts",
+      "fields": {
+        "id": "string",
+        "task_text": "string",
+        "target_ids": "json_array",
+        "required_context_ids": "json_array",
+        "token_budget": "integer",
+        "predicted_steps": "json_array",
+        "refactor_decision_ids": "json_array",
+        "validation_plan": "json_array",
+        "patch_strategy": "string",
+        "created_at": "timestamp"
+      }
+    }
+  },
+  "scores": {
+    "refactor_pressure_score": {
+      "formula_key": "rps_v0_1",
+      "range": [0, 100],
+      "trigger_classes": {
+        "none": { "min": 0, "max": 34 },
+        "observe": { "min": 35, "max": 49 },
+        "suggest_refactor": { "min": 50, "max": 64 },
+        "strong_pivot": { "min": 65, "max": 79 },
+        "refactor_now": { "min": 80, "max": 100 }
+      }
+    }
+  },
+  "constraints": {
+    "required_relations": [
+      "File.repo_id -> Repo.id",
+      "Module.repo_id -> Repo.id",
+      "Symbol.file_id -> File.id",
+      "Contract.symbol_id -> Symbol.id",
+      "BoundaryInteraction.symbol_id -> Symbol.id",
+      "EffectProfile.symbol_id -> Symbol.id",
+      "CapabilityFingerprint.target_id -> Symbol.id | Module.id",
+      "RefactorPressureScore.target_id -> Symbol.id | Module.id | File.id",
+      "RefactorDecision.target_id -> Symbol.id | Module.id | File.id",
+      "PlanArtifact.target_ids -> Symbol.id | Module.id | File.id[]"
+    ],
+    "integrity_rules": [
+      "A Symbol must belong to exactly one File.",
+      "A BoundaryInteraction must reference exactly one Symbol.",
+      "A Contract must reference exactly one Symbol.",
+      "A RefactorDecision must reference at least one evidence-bearing profile or score record.",
+      "A PlanArtifact must reference explicit context IDs instead of prose alone."
+    ]
+  }
+}

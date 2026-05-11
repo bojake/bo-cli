@@ -1,0 +1,54 @@
+{
+  "version": "0.1.0",
+  "notes": [
+    "Rules are evaluated by RefactorDecisionDeriver to classify pivot type and emit candidate seams.",
+    "Keep threshold changes explicit because they affect whether BO suggests refactors at all."
+  ],
+  "decisionMinimums": {
+    "minimumRpsScore": 50
+  },
+  "pivotThresholds": {
+    "orchestrationOverload": {
+      "minimumDominantResponsibilities": 3,
+      "minimumFanOut": 5,
+      "minimumOutgoingCallCount": 4
+    },
+    "boundaryMixing": {
+      "minimumDistinctBoundaryTypes": 2
+    },
+    "sideEffectComputation": {
+      "minimumCognitiveComplexity": 8,
+      "minimumBranchCount": 4
+    },
+    "policyBranching": {
+      "minimumBranchCount": 4,
+      "minimumCognitiveComplexity": 10
+    },
+    "latentModule": {
+      "minimumFileSymbolCount": 4,
+      "minimumInternalCallCount": 3
+    }
+  },
+  "candidateSeams": {
+    "orchestratorMinimumCallCount": 3,
+    "extractableLeafCallCount": 0,
+    "pureLogicComplexityNoteMinimum": 5,
+    "boundaryAdapterTargetLimit": 3,
+    "roleSeams": {
+      "persistence": "persistence_adapter",
+      "transport": "transport_adapter",
+      "security": "security_gate",
+      "caching": "cache_adapter",
+      "auditing": "audit_publisher",
+      "orchestration": "orchestrator"
+    },
+    "roleFallbackSuffix": "_handler",
+    "namedSymbolSeams": [
+      {
+        "seamPrefix": "cli_json_output",
+        "symbolKinds": ["function", "method"],
+        "displayNames": ["WriteJson", "WriteJsonAsync", "SerializeJson", "WriteJsonResponse"]
+      }
+    ]
+  }
+}

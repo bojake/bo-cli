@@ -1,0 +1,89 @@
+{
+  "version": "0.1.0",
+  "notes": [
+    "Rules for deriving side-effect profiles and responsibility roles from boundary interactions.",
+    "Boundary and operation type values come from package_classification_rules.json matches.",
+    "effectFlags supported in workflowRoles: has_auth_logic, has_caching_logic, emits_events."
+  ],
+  "effectRules": {
+    "readsStateOperationTypes": [
+      "read",
+      "cache_get",
+      "authenticate",
+      "authorize"
+    ],
+    "writesStateOperationTypes": [
+      "write",
+      "delete",
+      "cache_put",
+      "serialize"
+    ],
+    "emitsEventsOperationTypes": [
+      "publish"
+    ],
+    "callsExternalServiceBoundaryTypes": [
+      "http",
+      "queue",
+      "auth",
+      "email",
+      "search",
+      "feature_flag"
+    ],
+    "authBoundaryTypes": [
+      "auth"
+    ],
+    "cachingBoundaryTypes": [
+      "cache"
+    ],
+    "loggingBoundaryTypes": [
+      "logging"
+    ]
+  },
+  "responsibilityRules": {
+    "workflowRoles": [
+      {
+        "role": "persistence",
+        "boundaryTypes": [
+          "db"
+        ],
+        "effectFlags": []
+      },
+      {
+        "role": "transport",
+        "boundaryTypes": [
+          "http"
+        ],
+        "effectFlags": []
+      },
+      {
+        "role": "security",
+        "boundaryTypes": [
+          "auth"
+        ],
+        "effectFlags": [
+          "has_auth_logic"
+        ]
+      },
+      {
+        "role": "caching",
+        "boundaryTypes": [
+          "cache"
+        ],
+        "effectFlags": [
+          "has_caching_logic"
+        ]
+      },
+      {
+        "role": "auditing",
+        "boundaryTypes": [
+          "queue"
+        ],
+        "effectFlags": [
+          "emits_events"
+        ]
+      }
+    ],
+    "orchestrationRole": "orchestration",
+    "orchestrationMinimumBoundaryTypes": 2
+  }
+}
