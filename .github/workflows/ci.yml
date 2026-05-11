@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Public boundary guard
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import sys
+
+          forbidden = [
+              "Kuzu" + "-NG",
+              "CLA" + "iR",
+              "Key" + "cloak",
+              "client" + "_secret",
+              "access" + "_token",
+              "acop" + "_server",
+              "/Users" + "/",
+              ".." + "/BogDB",
+              ".." + "/Kuzu" + "-NG",
+              ".." + "/beyondordinary.ai",
+              "ProjectReference" + " Include=\"..\\Bog",
+              "ProjectReference" + " Include=\"..\\Kuzu",
+          ]
+
+          skipped_dirs = {".git", ".bo", "bin", "obj", "TestResults", "coverage"}
+          hits = []
+
+          for path in Path(".").rglob("*"):
+              if not path.is_file():
+                  continue
+              if any(part in skipped_dirs for part in path.parts):
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8")
+              except UnicodeDecodeError:
+                  continue
+              for line_number, line in enumerate(text.splitlines(), start=1):
+                  for token in forbidden:
+                      if token in line:
+                          hits.append(f"{path}:{line_number}: {token}")
+
+          if hits:
+              print("Public boundary guard failed:")
+              print("\n".join(hits))
+              sys.exit(1)
+          PY
+
+      - name: Restore
+        run: dotnet restore BoCli.slnx
+
+      - name: Build
+        run: dotnet build BoCli.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test BoCli.slnx --configuration Release --no-build --verbosity minimal
+
+      - name: CLI smoke test
+        shell: bash
+        run: |
+          dotnet run --project BO.Cli/BO.Cli.csproj --configuration Release --no-build -- index --json > /tmp/bo-index.json
+          python3 -m json.tool /tmp/bo-index.json > /dev/null
